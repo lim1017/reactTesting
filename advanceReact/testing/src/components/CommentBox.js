@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import * as actions from '../actions'
+import { connect } from 'react-redux'
 
-const CommentBox = () => {
+const CommentBox = (props) => {
 
   const [comment, setComment] = useState('')
   
@@ -9,6 +11,7 @@ const CommentBox = () => {
     e.preventDefault()
     setComment('')
     // TODO call action creator save comment
+    props.saveComment(comment)
   }
 
   return (
@@ -25,4 +28,8 @@ const CommentBox = () => {
   )
 }
 
-export default CommentBox
+const mapStateToProps = (state)=>{
+  return {state}
+}
+
+export default connect(null, actions)(CommentBox)

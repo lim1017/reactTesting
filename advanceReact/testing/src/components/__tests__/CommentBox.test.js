@@ -1,13 +1,18 @@
 import React from "react";
 import { mount } from "enzyme";
 import CommentBox from "../CommentBox";
+import Root from '../../Root'
 
 // console.log(wrapped.find("textarea").length);
 
 let wrapped;
 
 beforeEach(() => {
-  wrapped = mount(<CommentBox />);
+  wrapped = mount(
+  <Root>
+    <CommentBox />
+  </Root>
+  );
 });
 
 afterEach(() => {
@@ -19,37 +24,25 @@ it("has a text area and a button", () => {
   expect(wrapped.find("button").length).toEqual(1);
 });
 
-
-
-describe('the text area', ()=>{
-
-  beforeEach(()=>{
+describe("the text area", () => {
+  beforeEach(() => {
     const textArea = wrapped.find("textarea");
-    textArea.simulate("change", { 
-      target: { value: "new comment" } 
+    textArea.simulate("change", {
+      target: { value: "new comment" },
     });
     wrapped.update();
-  })
-
-  it("can type in text area", () => {
-    
-  
-    //cant used textArea variable because it is referencing the OLD area
-    expect(wrapped.find("textarea").prop('value')).toEqual("new comment");
-
-  
   });
 
-  it("can submit and show empty text area", ()=>{
-     //submit form
-     wrapped.find("form").simulate("submit");
-     wrapped.update();
-   
-     expect(wrapped.find("textarea").prop('value')).toEqual("");
-  })
+  it("can type in text area", () => {
+    //cant used textArea variable because it is referencing the OLD area
+    expect(wrapped.find("textarea").prop("value")).toEqual("new comment");
+  });
 
+  it("can submit and show empty text area", () => {
+    //submit form
+    wrapped.find("form").simulate("submit");
+    wrapped.update();
 
-})
-
-
-
+    expect(wrapped.find("textarea").prop("value")).toEqual("");
+  });
+});
